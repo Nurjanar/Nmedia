@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_spacing">16dp</dimen>
+    <dimen name="size_for_button">24dp</dimen>
+    <dimen name="size_for_number">32dp</dimen>
+    <dimen name="size_for_avatar">48dp</dimen>
+    <dimen name="spacing_for_number">8dp</dimen>
+</resources>

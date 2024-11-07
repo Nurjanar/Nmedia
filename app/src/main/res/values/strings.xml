@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Nmedia</string>
-    <string name="text">Nmedia!</string>
+    <string name="author">Netology. University of internet-professions of the future.</string>
+    <string name="published">May 21 at 18:36</string>
+    <string name="content">Hello, this is the new Netology! Once upon a time, Netology began with intensive courses in online marketing. Then came courses in design, development, analytics and management. We grow ourselves and help students grow: from beginners to confident professionals. But the most important thing remains with us: we believe that everyone already has the strength that makes them want more, aim higher, run faster. Our mission is to help you get on the path to growth and start a chain of change → http://netolo.gy/fyb"</string>
+    <string name="avatar_description">avatar</string>
+    <string name="menu_button_description">Menu</string>
+    <string name="liked_button_description">Liked</string>
+    <string name="share_button_description">Share</string>
+    <string name="viewed_description">Viewed</string>
 </resources>

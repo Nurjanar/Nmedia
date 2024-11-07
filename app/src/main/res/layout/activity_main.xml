@@ -4,15 +4,177 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/common_spacing"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text"
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/size_for_avatar"
+        android:layout_height="@dimen/size_for_avatar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/netology_original"
+        android:contentDescription="@string/avatar_description" />
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/author"
+        android:textColor="@color/grey"
+        android:layout_marginStart="@dimen/common_spacing"
+        app:layout_constraintBottom_toTopOf="@+id/published"
+        app:layout_constraintEnd_toStartOf="@+id/menu"
+        app:layout_constraintStart_toEndOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+
+    <TextView
+        android:id="@+id/published"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/published"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/author"
+        app:layout_constraintTop_toBottomOf="@+id/author" />
+
+    <ImageButton
+        android:id="@+id/menu"
+        android:layout_width="@dimen/size_for_avatar"
+        android:layout_height="@dimen/size_for_avatar"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/menu_button_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/common_spacing"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/author"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/baseline_more_vert_24"
+        app:tint="@color/grey" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/headerBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="avatar,published,menu" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_spacing"
+        android:layout_marginBottom="@dimen/common_spacing"
+        android:layout_marginEnd="32dp"
+        android:text="@string/content"
+        android:textColor="@color/grey"
+        android:autoLink="all"
+        android:textColorLink="@color/light_green"
+        app:layout_constraintBottom_toTopOf="@+id/secondBarrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerBarrier"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/secondBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="content" />
+
+    <ImageView
+        android:id="@+id/liked"
+        android:layout_width="@dimen/size_for_button"
+        android:layout_height="@dimen/size_for_button"
+        android:layout_marginTop="@dimen/common_spacing"
+        app:srcCompat="@drawable/baseline_favorite_border_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/countOfLikes"
+        app:layout_constraintTop_toBottomOf="@id/secondBarrier"
+        app:tint="@color/grey"
+        android:contentDescription="@string/liked_button_description" />
+
+    <TextView
+        android:id="@+id/countOfLikes"
+        android:layout_width="@dimen/size_for_number"
+        android:layout_height="wrap_content"
+        android:text="@integer/countOfLikes"
+        android:textColor="@color/grey"
+        android:layout_marginStart="@dimen/spacing_for_number"
+        app:layout_constraintStart_toEndOf="@id/liked"
+        app:layout_constraintTop_toTopOf="@id/liked"
+        app:layout_constraintBottom_toBottomOf="@id/liked" />
+
+    <ImageView
+        android:id="@+id/share"
+        android:layout_width="@dimen/size_for_button"
+        android:layout_height="@dimen/size_for_button"
+        app:layout_constraintStart_toEndOf="@id/countOfLikes"
+        app:layout_constraintTop_toTopOf="@id/liked"
+        app:layout_constraintEnd_toStartOf="@id/countOfShares"
+        app:layout_constraintBottom_toBottomOf="@id/liked"
+        android:layout_marginStart="@dimen/common_spacing"
+        app:tint="@color/grey"
+        app:srcCompat="@drawable/baseline_share_24"
+        android:contentDescription="@string/share_button_description" />
+
+    <TextView
+        android:id="@+id/countOfShares"
+        android:layout_width="@dimen/size_for_number"
+        android:layout_height="wrap_content"
+        android:text="@integer/countOfShares"
+        android:textColor="@color/grey"
+        android:layout_marginStart="@dimen/spacing_for_number"
+        app:layout_constraintStart_toEndOf="@id/share"
+        app:layout_constraintTop_toTopOf="@id/share"
+        app:layout_constraintBottom_toBottomOf="@id/share" />
+
+    <ImageView
+        android:id="@+id/viewed"
+        android:layout_width="@dimen/size_for_button"
+        android:layout_height="@dimen/size_for_button"
+        android:contentDescription="@string/viewed_descripton"
+        app:layout_constraintBottom_toBottomOf="@id/share"
+        app:layout_constraintEnd_toStartOf="@id/countOfViews"
+        app:layout_constraintTop_toTopOf="@id/share"
+        app:layout_constraintStart_toEndOf="@id/countOfShares"
+        android:layout_marginStart="160dp"
+        app:srcCompat="@drawable/baseline_remove_red_eye_24"
+        app:tint="@color/grey" />
+
+    <TextView
+        android:id="@+id/countOfViews"
+        android:layout_width="@dimen/size_for_number"
+        android:layout_height="wrap_content"
+        android:text="@integer/countOfViews"
+        android:textColor="@color/grey"
+        android:layout_marginStart="@dimen/spacing_for_number"
+        app:layout_constraintStart_toEndOf="@id/viewed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/viewed"
+        app:layout_constraintBottom_toBottomOf="@id/viewed" />
+
+    <View
+        android:id="@+id/redDivider"
+        app:layout_constraintStart_toStartOf="@id/liked"
+        app:layout_constraintEnd_toEndOf="@id/countOfViews"
+        app:layout_constraintTop_toBottomOf="@id/liked"
+        android:layout_marginTop="@dimen/common_spacing"
+        android:layout_width="wrap_content"
+        android:layout_height="3dp"
+        android:background="@color/pink" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
