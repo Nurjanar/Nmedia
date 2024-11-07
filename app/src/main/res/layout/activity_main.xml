@@ -145,7 +145,7 @@
         android:id="@+id/viewed"
         android:layout_width="@dimen/size_for_button"
         android:layout_height="@dimen/size_for_button"
-        android:contentDescription="@string/viewed_descripton"
+        android:contentDescription="@string/viewed_description"
         app:layout_constraintBottom_toBottomOf="@id/share"
         app:layout_constraintEnd_toStartOf="@id/countOfViews"
         app:layout_constraintTop_toTopOf="@id/share"
