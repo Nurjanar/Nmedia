@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="countOfLikes">10</integer>
-    <integer name="countOfShares">5</integer>
+    <integer name="countOfShared">5</integer>
     <integer name="countOfViews">5</integer>
 </resources>
