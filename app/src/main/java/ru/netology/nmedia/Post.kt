@@ -1,3 +1,5 @@
+package ru.netology.nmedia
+
 data class Post(
     val id: Long,
     val author: String,
