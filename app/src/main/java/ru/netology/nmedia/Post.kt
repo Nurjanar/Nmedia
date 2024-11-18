@@ -9,8 +9,4 @@ data class Post(
     var shared: Int,
     val viewed: Int,
     val likedByMe: Boolean = false
-) {
-    fun incrementShared() {
-        shared++
-    }
-}
+)

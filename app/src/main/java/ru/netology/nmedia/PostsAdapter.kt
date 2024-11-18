@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.databinding.CardPostBinding
 
 typealias LikeCallBack = (Post) -> Unit
+typealias ShareCallBack = (Post) -> Unit
 
-class PostsAdapter(private val callback: LikeCallBack) :
+class PostsAdapter(private val callback: LikeCallBack, private val callBACK: ShareCallBack) :
     ListAdapter<Post, PostViewHolder>(PostDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         return PostViewHolder(
@@ -18,7 +19,8 @@ class PostsAdapter(private val callback: LikeCallBack) :
                 parent,
                 false
             ),
-            callback
+            callback,
+            callBACK
         )
     }
 
@@ -29,7 +31,8 @@ class PostsAdapter(private val callback: LikeCallBack) :
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val callback: LikeCallBack
+    private val callback: LikeCallBack,
+    private val callBACK: ShareCallBack
 ) : RecyclerView.ViewHolder(binding.root) {
     private val count = Count()
     fun bind(post: Post) = with(binding) {
@@ -50,7 +53,7 @@ class PostViewHolder(
 
 
         share.setOnClickListener {
-            post.incrementShared()
+            callBACK(post)
             shared.text = count.numberCheck(post.shared)
         }
 
