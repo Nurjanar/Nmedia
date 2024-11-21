@@ -1,6 +1,5 @@
 package ru.netology.nmedia
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 

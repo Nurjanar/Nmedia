@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.App.LikedCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/like_color</item>
+    </style>
+
+    <style name="Widget.App.LikedButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="iconTint">@color/like_color</item>
+        <item name="android:minWidth">0dp</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="iconTint">@color/grey</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:minWidth">0dp</item>
+    </style>
+</resources>

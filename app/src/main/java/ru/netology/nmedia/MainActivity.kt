@@ -1,10 +1,10 @@
 package ru.netology.nmedia
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                 binding.group.visibility = View.VISIBLE
                 binding.content.setText(it.content)
                 binding.content.requestFocus()
-
             }
         }
 
