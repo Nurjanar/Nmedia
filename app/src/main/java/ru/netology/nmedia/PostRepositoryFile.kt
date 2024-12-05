@@ -58,9 +58,13 @@ class PostRepositoryFile(private val context: Context) : PostRepository {
         if (file.exists()) {
             context.openFileInput(FILENAME).bufferedReader().use {
                 posts = gson.fromJson(it, token)
-                nextId = posts.maxOf { it.id } + 1
-                data.value = posts
+                if (posts.isNotEmpty()) {
+                    nextId = posts.maxOf { it.id } + 1
+                } else {
+                    nextId = 1
+                }
             }
+            data.value = posts
         } else {
             sync()
         }

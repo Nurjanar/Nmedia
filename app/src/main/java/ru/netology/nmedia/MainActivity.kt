@@ -2,6 +2,7 @@ package ru.netology.nmedia
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -55,6 +56,13 @@ class MainActivity : AppCompatActivity() {
                 if (new) {
                     binding.container.smoothScrollToPosition(0)
                 }
+            }
+            if (posts.isEmpty()) {
+                binding.emptyStateView.visibility = View.VISIBLE
+                binding.container.visibility = View.GONE
+            } else {
+                binding.emptyStateView.visibility = View.GONE
+                binding.container.visibility = View.VISIBLE
             }
         }
         binding.add.setOnClickListener {
