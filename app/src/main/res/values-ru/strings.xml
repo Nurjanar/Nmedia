@@ -6,11 +6,13 @@
     <string name="like_button_description">Нравится</string>
     <string name="share_button_description">Поделиться</string>
     <string name="viewed_description">Просмотрено</string>
-    <string name="save_button_description">Сохранить</string>
+    <string name="add_button_description">Добавить</string>
     <string name="menu_remove">Удалить</string>
     <string name="menu_edit">Редактировать</string>
     <string name="post_text">Текст поста</string>
     <string name="error_empty_content">Контент не может быть пустым</string>
     <string name="cancel_button_description">Отмена</string>
-    <string name="editor_description">Редактор</string>
+    <string name="save_button_description">Сохранить</string>
+    <string name="chooser_share_post">Пожалуйста,выберите приложение</string>
+
 </resources>

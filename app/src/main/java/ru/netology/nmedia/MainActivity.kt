@@ -1,8 +1,7 @@
 package ru.netology.nmedia
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -14,13 +13,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
+        val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+        }
         val adapter = PostsAdapter(object : OnInteractionListener {
+
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
             }
 
             override fun onShare(post: Post) {
                 viewModel.shareById(post.id)
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                }
+                val shareIntent = Intent.createChooser(
+                    intent, getString(R.string.chooser_share_post)
+                )
+                startActivity(shareIntent)
             }
 
             override fun onRemove(post: Post) {
@@ -28,12 +41,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
+                newPostLauncher.launch(post.content)
                 viewModel.edit(post)
+
             }
 
-            override fun onCancel() {
-                viewModel.cancel()
-            }
         }
         )
         binding.container.adapter = adapter
@@ -45,34 +57,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        viewModel.edited.observe(this) {
-            if (it.id != 0L) {
-                binding.group.visibility = View.VISIBLE
-                binding.content.setText(it.content)
-                binding.content.requestFocus()
-            }
+        binding.add.setOnClickListener {
+            newPostLauncher.launch(null)
         }
 
-        binding.save.setOnClickListener {
-            val text = binding.content.text.toString()
-            if (text.isBlank()) {
-                Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            viewModel.changeContent(text)
-            binding.group.visibility = View.GONE
-            binding.content.setText("")
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyBoard(it)
-        }
-        binding.cancel.setOnClickListener {
-            viewModel.cancel()
-            binding.group.visibility = View.GONE
-            binding.content.setText("")
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyBoard(it)
-        }
         binding.container.itemAnimator = null
 
     }
 }
+
+
