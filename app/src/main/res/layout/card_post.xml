@@ -86,6 +86,18 @@
         app:layout_constraintTop_toBottomOf="@+id/headerBarrier"
         app:layout_constraintVertical_bias="0.0" />
 
+    <ImageView
+        android:id="@+id/video"
+        android:layout_width="@dimen/picture"
+        android:layout_height="@dimen/picture"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/secondBarrier"
+        app:layout_constraintEnd_toEndOf="@id/content"
+        app:layout_constraintStart_toStartOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        tools:srcCompat="@drawable/video"
+        android:contentDescription="@string/video_description" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/secondBarrier"
         android:layout_width="wrap_content"
@@ -133,5 +145,19 @@
         app:layout_constraintStart_toEndOf="@id/share"
         android:layout_marginStart="140dp"
         app:icon="@drawable/ic_viewed_24" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_black"
+        app:layout_constraintBottom_toBottomOf="@+id/video"
+        app:layout_constraintEnd_toEndOf="@+id/video"
+        app:layout_constraintStart_toStartOf="@+id/video"
+        app:layout_constraintTop_toTopOf="@+id/video"
+        app:srcCompat="@drawable/ic_play_48"
+        android:visibility="visible"
+        android:contentDescription="@string/play_button_description" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
