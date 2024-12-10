@@ -15,4 +15,8 @@
     <string name="save_button_description">Сохранить</string>
     <string name="chooser_share_post">Пожалуйста,выберите приложение</string>
     <string name="empty_state_view">Постов нет</string>
+    <string name="play_button_description">Воспроизвести</string>
+    <string name="video_description">Видео</string>
+    <string name="error_video">Видео не найдено</string>
+    <string name="link_to_video">Ссылка на видео(необязательно)</string>
 </resources>

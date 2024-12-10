@@ -14,4 +14,8 @@
     <string name="save_button_description">Save</string>
     <string name="chooser_share_post">Please, select the application</string>
     <string name="empty_state_view">No posts</string>
+    <string name="play_button_description">Play</string>
+    <string name="video_description">Video</string>
+    <string name="error_video">Video not found</string>
+    <string name="link_to_video">Link to video(optional)</string>
 </resources>

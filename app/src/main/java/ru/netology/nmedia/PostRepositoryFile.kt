@@ -44,7 +44,8 @@ class PostRepositoryFile(private val context: Context) : PostRepository {
             likes = 556,
             shared = 98,
             viewed = 99999999,
-            likedByMe = false
+            likedByMe = false,
+            videoLink = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         )
     ).reversed()
         set(value) {
@@ -113,7 +114,10 @@ class PostRepositoryFile(private val context: Context) : PostRepository {
                 if (it.id != post.id)
                     it
                 else
-                    it.copy(content = post.content)
+                    it.copy(
+                        content = post.content,
+                        videoLink = post.videoLink
+                    )
             }
             data.value = posts
         }

@@ -12,7 +12,8 @@ private val empty = Post(
     likes = 0,
     shared = 0,
     viewed = 0,
-    likedByMe = false
+    likedByMe = false,
+    videoLink = null
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,9 +24,14 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun likeById(id: Long) = repository.likeById(id)
     fun shareById(id: Long) = repository.shareById(id)
     fun removeById(id: Long) = repository.removeById(id)
-    fun changeContent(content: String) {
+    fun changeContent(content: String, video: String?) {
         edited.value?.let {
-            repository.save(it.copy(content = content))
+            repository.save(
+                it.copy(
+                    content = content,
+                    videoLink = video
+                )
+            )
         }
         edited.value = empty
     }

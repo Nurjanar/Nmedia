@@ -1,6 +1,7 @@
 package ru.netology.nmedia
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -15,8 +17,13 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
-            result ?: return@registerForActivityResult
-            viewModel.changeContent(result)
+
+            result?.let {
+                viewModel.changeContent(
+                    content = it.text,
+                    video = it.videoUrl
+                )
+            }
         }
         val adapter = PostsAdapter(object : OnInteractionListener {
 
@@ -42,9 +49,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                newPostLauncher.launch(post.content)
+                newPostLauncher.launch(Pair(post.content, post.videoLink))
                 viewModel.edit(post)
 
+            }
+
+            override fun onPlayVideo(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoLink))
+                startActivity(intent)
             }
 
         }

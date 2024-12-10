@@ -1,6 +1,7 @@
 package ru.netology.nmedia
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -13,6 +14,7 @@ interface OnInteractionListener {
     fun onShare(post: Post) {}
     fun onRemove(post: Post) {}
     fun onEdit(post: Post) {}
+    fun onPlayVideo(post: Post) {}
 }
 
 class PostsAdapter(private val onInteractionListener: OnInteractionListener) :
@@ -38,6 +40,7 @@ class PostViewHolder(
     private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
     private val count = Count()
+
     fun bind(post: Post) = with(binding) {
         author.text = post.author
         published.text = post.published
@@ -46,7 +49,19 @@ class PostViewHolder(
         viewed.text = count.numberCheck(post.viewed)
         like.isChecked = post.likedByMe
         like.text = count.numberCheck(post.likes)
-
+        if (post.videoLink.isNullOrEmpty()) {
+            video.visibility = View.GONE
+            playButton.visibility = View.GONE
+        } else {
+            video.visibility = View.VISIBLE
+            playButton.visibility = View.VISIBLE
+            playButton.setOnClickListener {
+                onInteractionListener.onPlayVideo(post)
+            }
+            video.setOnClickListener {
+                onInteractionListener.onPlayVideo(post)
+            }
+        }
         like.setOnClickListener {
             onInteractionListener.onLike(post)
         }
