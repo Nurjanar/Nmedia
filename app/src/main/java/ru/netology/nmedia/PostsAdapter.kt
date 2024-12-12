@@ -55,12 +55,12 @@ class PostViewHolder(
         } else {
             video.visibility = View.VISIBLE
             playButton.visibility = View.VISIBLE
-            playButton.setOnClickListener {
-                onInteractionListener.onPlayVideo(post)
-            }
-            video.setOnClickListener {
-                onInteractionListener.onPlayVideo(post)
-            }
+        }
+        playButton.setOnClickListener {
+            onInteractionListener.onPlayVideo(post)
+        }
+        video.setOnClickListener {
+            onInteractionListener.onPlayVideo(post)
         }
         like.setOnClickListener {
             onInteractionListener.onLike(post)

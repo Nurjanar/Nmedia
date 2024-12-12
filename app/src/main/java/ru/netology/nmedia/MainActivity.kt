@@ -17,12 +17,15 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
-
-            result?.let {
-                viewModel.changeContent(
-                    content = it.text,
-                    video = it.videoUrl
-                )
+            if (result == null) {
+                viewModel.cancel()
+            } else {
+                result.let {
+                    viewModel.changeContent(
+                        content = it.text,
+                        video = it.videoUrl
+                    )
+                }
             }
         }
         val adapter = PostsAdapter(object : OnInteractionListener {

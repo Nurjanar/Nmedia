@@ -92,8 +92,8 @@
         android:layout_height="@dimen/picture"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/secondBarrier"
-        app:layout_constraintEnd_toEndOf="@id/content"
-        app:layout_constraintStart_toStartOf="@id/content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content"
         tools:srcCompat="@drawable/video"
         android:contentDescription="@string/video_description" />

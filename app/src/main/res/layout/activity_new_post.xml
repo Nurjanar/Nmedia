@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".NewPostActivity">
 
+
     <EditText
         android:id="@+id/edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginTop="@dimen/common_spacing"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/common_spacing"
         android:background="@android:color/transparent"
         android:gravity="start|top"
         android:inputType="textMultiLine" />
@@ -23,7 +27,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ok"
-        app:srcCompat="@drawable/ic_ok_24"
+        app:srcCompat="@drawable/ic_ok_48"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/light_green"
@@ -44,6 +48,9 @@
         android:id="@+id/videoUrl"
         android:layout_gravity="bottom"
         android:layout_marginBottom="150dp"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/common_spacing"
+        android:layout_marginTop="@dimen/common_spacing"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:textColor="@android:color/black"
