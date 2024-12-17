@@ -5,11 +5,17 @@
     <string name="like_button_description">Like</string>
     <string name="share_button_description">Share</string>
     <string name="viewed_description">Viewed</string>
-    <string name="save_button_description">Save</string>
+    <string name="add_button_description">Add</string>
     <string name="menu_remove">Remove</string>
     <string name="menu_edit">Edit</string>
     <string name="post_text">Post Text</string>
     <string name="error_empty_content">Content can not be empty</string>
     <string name="cancel_button_description">Cancel</string>
-    <string name="editor_description">Editor</string>
+    <string name="save_button_description">Save</string>
+    <string name="chooser_share_post">Please, select the application</string>
+    <string name="empty_state_view">No posts</string>
+    <string name="play_button_description">Play</string>
+    <string name="video_description">Video</string>
+    <string name="error_video">Video not found</string>
+    <string name="link_to_video">Link to video(optional)</string>
 </resources>

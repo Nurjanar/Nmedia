@@ -1,26 +1,50 @@
 package ru.netology.nmedia
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
+        val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
+            if (result == null) {
+                viewModel.cancel()
+            } else {
+                result.let {
+                    viewModel.changeContent(
+                        content = it.text,
+                        video = it.videoUrl
+                    )
+                }
+            }
+        }
         val adapter = PostsAdapter(object : OnInteractionListener {
+
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
             }
 
             override fun onShare(post: Post) {
                 viewModel.shareById(post.id)
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                }
+                val shareIntent = Intent.createChooser(
+                    intent, getString(R.string.chooser_share_post)
+                )
+                startActivity(shareIntent)
             }
 
             override fun onRemove(post: Post) {
@@ -28,12 +52,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
+                newPostLauncher.launch(Pair(post.content, post.videoLink))
                 viewModel.edit(post)
+
             }
 
-            override fun onCancel() {
-                viewModel.cancel()
+            override fun onPlayVideo(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoLink))
+                startActivity(intent)
             }
+
         }
         )
         binding.container.adapter = adapter
@@ -44,35 +72,21 @@ class MainActivity : AppCompatActivity() {
                     binding.container.smoothScrollToPosition(0)
                 }
             }
-        }
-        viewModel.edited.observe(this) {
-            if (it.id != 0L) {
-                binding.group.visibility = View.VISIBLE
-                binding.content.setText(it.content)
-                binding.content.requestFocus()
+            if (posts.isEmpty()) {
+                binding.emptyStateView.visibility = View.VISIBLE
+                binding.container.visibility = View.GONE
+            } else {
+                binding.emptyStateView.visibility = View.GONE
+                binding.container.visibility = View.VISIBLE
             }
+        }
+        binding.add.setOnClickListener {
+            newPostLauncher.launch(null)
         }
 
-        binding.save.setOnClickListener {
-            val text = binding.content.text.toString()
-            if (text.isBlank()) {
-                Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            viewModel.changeContent(text)
-            binding.group.visibility = View.GONE
-            binding.content.setText("")
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyBoard(it)
-        }
-        binding.cancel.setOnClickListener {
-            viewModel.cancel()
-            binding.group.visibility = View.GONE
-            binding.content.setText("")
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyBoard(it)
-        }
         binding.container.itemAnimator = null
 
     }
 }
+
+
