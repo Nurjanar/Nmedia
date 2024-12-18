@@ -15,6 +15,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onEdit(post: Post) {}
     fun onPlayVideo(post: Post) {}
+    fun onPostClick(post: Post) {}
 }
 
 class PostsAdapter(private val onInteractionListener: OnInteractionListener) :
@@ -69,6 +70,19 @@ class PostViewHolder(
         share.setOnClickListener {
             onInteractionListener.onShare(post)
         }
+        avatar.setOnClickListener {
+            onInteractionListener.onPostClick(post)
+        }
+        published.setOnClickListener {
+            onInteractionListener.onPostClick(post)
+        }
+        content.setOnClickListener {
+            onInteractionListener.onPostClick(post)
+        }
+        author.setOnClickListener {
+            onInteractionListener.onPostClick(post)
+        }
+
         menu.setOnClickListener {
             PopupMenu(it.context, it).apply {
                 inflate(R.menu.menu_options)
