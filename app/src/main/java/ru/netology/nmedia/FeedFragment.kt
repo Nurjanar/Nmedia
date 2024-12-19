@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.CurrentPostFragment.Companion.idArg
 import ru.netology.nmedia.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.NewPostFragment.Companion.videoArg
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -64,9 +65,11 @@ class FeedFragment : Fragment() {
             }
 
             override fun onPostClick(post: Post) {
-                viewModel.selectPost(post)
                 findNavController().navigate(
-                    R.id.action_feedFragment_to_currentPostFragment
+                    R.id.action_feedFragment_to_currentPostFragment,
+                    Bundle().apply {
+                        idArg = post.id.toString()
+                    }
                 )
             }
         }

@@ -9,7 +9,7 @@
         android:id="@+id/feedFragment"
         android:name="ru.netology.nmedia.FeedFragment"
         android:label="fragment_feed"
-        tools:layout="@layout/fragment_feed" >
+        tools:layout="@layout/fragment_feed">
         <action
             android:id="@+id/action_feedFragment_to_newPostFragment"
             app:destination="@id/newPostFragment" />
@@ -25,7 +25,7 @@
         android:id="@+id/currentPostFragment"
         android:name="ru.netology.nmedia.CurrentPostFragment"
         android:label="fragment_current_post"
-        tools:layout="@layout/fragment_current_post" >
+        tools:layout="@layout/fragment_current_post">
         <action
             android:id="@+id/action_currentPostFragment_to_newPostFragment"
             app:destination="@id/newPostFragment" />

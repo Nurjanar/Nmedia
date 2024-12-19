@@ -21,8 +21,8 @@ class CurrentPostFragment : Fragment() {
     ): View? {
         val binding = FragmentCurrentPostBinding.inflate(layoutInflater, postPage, false)
         val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
-        val post = viewModel.returnSelectedPost()
-        val adapter = PostsAdapter(object : OnInteractionListener {
+        val postId = arguments?.idArg?.toLong() ?: -1
+        val holder = PostViewHolder(binding.postPage, object : OnInteractionListener {
 
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -64,10 +64,13 @@ class CurrentPostFragment : Fragment() {
             }
         }
         )
-        binding.postPage.adapter = adapter
-        adapter.submitList(post)
-
-
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
+            holder.bind(posts.find { it.id == postId } ?: return@observe)
+        }
         return binding.root
+    }
+
+    companion object {
+        var Bundle.idArg by StringArg
     }
 }
