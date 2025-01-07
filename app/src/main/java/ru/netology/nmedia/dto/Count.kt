@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.dto
 
 class Count {
     fun numberCheck(count: Int): String {

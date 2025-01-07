@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -9,9 +9,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nmedia.NewPostFragment.Companion.textArg
-import ru.netology.nmedia.NewPostFragment.Companion.videoArg
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
+import ru.netology.nmedia.activity.NewPostFragment.Companion.videoArg
+import ru.netology.nmedia.R
+import ru.netology.nmedia.adapter.OnInteractionListener
+import ru.netology.nmedia.adapter.PostViewHolder
 import ru.netology.nmedia.databinding.FragmentCurrentPostBinding
+import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.StringArg
+import ru.netology.nmedia.viewmodel.PostViewModel
 
 class CurrentPostFragment : Fragment() {
     override fun onCreateView(
