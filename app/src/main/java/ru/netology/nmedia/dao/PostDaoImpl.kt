@@ -67,22 +67,16 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
 
     override fun save(post: Post): Post {
         val values = ContentValues().apply {
-            // TODO: remove hardcoded values
+            if (post.id != 0L) {
+                put(PostColumns.COLUMN_ID, post.id)
+            }
             put(PostColumns.COLUMN_AUTHOR, "Me")
             put(PostColumns.COLUMN_CONTENT, post.content)
+            put(PostColumns.COLUMN_VIDEO_LINK, post.videoLink)
+            put(PostColumns.COLUMN_SHARED, post.shared)
             put(PostColumns.COLUMN_PUBLISHED, "now")
         }
-        val id = if (post.id != 0L) {
-            db.update(
-                PostColumns.TABLE,
-                values,
-                "${PostColumns.COLUMN_ID} = ?",
-                arrayOf(post.id.toString()),
-            )
-            post.id
-        } else {
-            db.insert(PostColumns.TABLE, null, values)
-        }
+        val id = db.replace(PostColumns.TABLE, null, values)
         db.query(
             PostColumns.TABLE,
             PostColumns.ALL_COLUMNS,
@@ -120,7 +114,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         db.execSQL(
             """
            UPDATE posts SET
-               shared = shared + 1 
+               shared = shared +  1 
            WHERE id = ?;
         """.trimIndent(), arrayOf(id)
         )

@@ -49,6 +49,7 @@ class PostRepositorySQLite(
     }
 
     override fun shareById(id: Long) {
+        dao.shareById(id)
         posts = posts.map {
             if (it.id != id) it else
                 it.copy(
