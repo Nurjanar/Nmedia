@@ -1,14 +1,18 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
+import ru.netology.nmedia.util.StringArg
+import ru.netology.nmedia.viewmodel.PostViewModel
 
 class NewPostFragment : Fragment() {
     override fun onCreateView(
@@ -25,11 +29,10 @@ class NewPostFragment : Fragment() {
 
         binding.ok.setOnClickListener {
             val text = binding.edit.text.toString()
-            val videoUrl = binding.videoUrl.text.toString().takeIf {
-                it.isNotBlank()
-            }
+            val videoUrl = binding.videoUrl.text.toString()
             if (text.isNotBlank()) {
                 viewModel.changeContent(text, videoUrl)
+                viewModel.save()
             }
             findNavController().navigateUp()
         }
@@ -37,6 +40,7 @@ class NewPostFragment : Fragment() {
             viewModel.cancel()
             findNavController().navigateUp()
         }
+
         return binding.root
     }
 
@@ -44,6 +48,7 @@ class NewPostFragment : Fragment() {
         var Bundle.textArg by StringArg
         var Bundle.videoArg by StringArg
     }
+
 }
 
 
