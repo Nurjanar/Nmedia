@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.activity.NewPostFragment.Companion.videoArg
-import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostViewHolder
 import ru.netology.nmedia.databinding.FragmentCurrentPostBinding
@@ -31,7 +31,7 @@ class CurrentPostFragment : Fragment() {
         val holder = PostViewHolder(binding.postPage, object : OnInteractionListener {
 
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                viewModel.likeById(post)
             }
 
             override fun onShare(post: Post) {
@@ -70,8 +70,14 @@ class CurrentPostFragment : Fragment() {
             }
         }
         )
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            holder.bind(posts.find { it.id == postId } ?: return@observe)
+
+        viewModel.data.observe(viewLifecycleOwner) { feedModel ->
+            val post = feedModel.posts.find { it.id == postId }
+            if (post != null) {
+                holder.bind(post)
+            } else {
+                return@observe
+            }
         }
         return binding.root
     }
