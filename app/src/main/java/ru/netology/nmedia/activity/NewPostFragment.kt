@@ -34,7 +34,6 @@ class NewPostFragment : Fragment() {
                 viewModel.save()
                 AndroidUtils.hideKeyBoard(requireView())
             }
-            findNavController().navigateUp()
         }
         binding.cancel.setOnClickListener {
             viewModel.cancel()
