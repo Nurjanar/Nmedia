@@ -11,8 +11,8 @@
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginEnd="@dimen/common_spacing"
         android:background="@android:color/transparent"
         android:gravity="start|top"
@@ -20,41 +20,41 @@
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppbar"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        style="@style/Widget.MaterialComponents.BottomAppBar.Colored" />
+        android:layout_gravity="bottom" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ok"
-        app:srcCompat="@drawable/ic_ok_48"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/light_green"
+        android:contentDescription="@string/save_button_description"
         app:layout_anchor="@id/bottomAppbar"
-        android:contentDescription="@string/save_button_description" />
+        app:srcCompat="@drawable/ic_ok_48" />
 
     <ImageButton
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomAppbar"
         android:background="@android:color/transparent"
         android:contentDescription="@string/cancel_button_description"
+        app:layout_anchor="@id/bottomAppbar"
         app:srcCompat="@drawable/ic_cancel_48" />
 
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/videoUrl"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="150dp"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:textColor="@android:color/black"
-        android:hint="@string/link_to_video" />
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginTop="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/common_spacing"
+        android:layout_marginBottom="150dp"
+        android:hint="@string/link_to_video"
+        android:textColor="@android:color/black" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

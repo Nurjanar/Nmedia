@@ -19,4 +19,10 @@
     <string name="video_description">Видео</string>
     <string name="error_video">Видео не найдено</string>
     <string name="link_to_video">Ссылка на видео(необязательно)</string>
+    <string name="google_play_unavailable">Google Api недоступен</string>
+    <string name="notification_user_liked">Пользователю %1$s понравилась запись %2$s\</string>
+    <string name="channel_remote_name">Уведомления сервера</string>
+    <string name="channel_remote_description">Уведомления с удалеленного сервера</string>
+    <string name="retry_loading">Повторить</string>
+    <string name="error_loading">Что-то пошло не так. Попробуйте позже</string>
 </resources>
