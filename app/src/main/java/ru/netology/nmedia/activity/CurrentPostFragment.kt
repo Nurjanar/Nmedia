@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.activity.NewPostFragment.Companion.videoArg
-import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostViewHolder
 import ru.netology.nmedia.databinding.FragmentCurrentPostBinding
@@ -26,12 +26,12 @@ class CurrentPostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentCurrentPostBinding.inflate(layoutInflater, postPage, false)
-        val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
+        val viewModel: PostViewModel by activityViewModels()
         val postId = arguments?.idArg?.toLong() ?: -1
         val holder = PostViewHolder(binding.postPage, object : OnInteractionListener {
 
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                viewModel.likeById(post)
             }
 
             override fun onShare(post: Post) {
@@ -70,8 +70,16 @@ class CurrentPostFragment : Fragment() {
             }
         }
         )
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            holder.bind(posts.find { it.id == postId } ?: return@observe)
+
+        viewModel.data.observe(viewLifecycleOwner) { state ->
+            if (state.posts.isNotEmpty()) {
+                val post = state.posts.find { it.id == postId }
+                if (post != null) {
+                    holder.bind(post)
+                } else {
+                    return@observe
+                }
+            }
         }
         return binding.root
     }
