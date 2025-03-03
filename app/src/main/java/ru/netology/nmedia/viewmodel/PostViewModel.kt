@@ -13,7 +13,7 @@ import ru.netology.nmedia.util.SingleLiveEvent
 private val empty = Post(
     id = 0,
     author = "",
-    authorAvatar = null,
+    authorAvatar = "",
     content = "",
     published = "",
     likes = 0,
@@ -54,6 +54,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             })
     }
 
+
     fun save() {
         edited.value?.let {
             repository.save(
@@ -76,17 +77,20 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value = post
     }
 
-    fun changeContent(content: String, video: String?) {
+    fun changeContent(content: String, video: String?, avatar: String?) {
         val text = content.trim()
         val video = video?.trim()
+        val avatar = avatar?.trim()
         if (edited.value?.content == text &&
-            edited.value?.videoLink == video
+            edited.value?.videoLink == video &&
+            edited.value?.authorAvatar == avatar
         ) {
             return
         }
         edited.value = edited.value?.copy(
             content = text,
-            videoLink = video
+            videoLink = video,
+            authorAvatar = avatar
         )
     }
 

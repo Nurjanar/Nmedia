@@ -15,4 +15,8 @@
         <item name="android:textColor">@color/grey</item>
         <item name="android:minWidth">0dp</item>
     </style>
+
+    <style name="ShapeAppearance.App.CornerSize50Percent" parent="ShapeAppearanceOverlay.Material3.Corner.Top">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.CurrentPostFragment.Companion.idArg
-import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
-import ru.netology.nmedia.activity.NewPostFragment.Companion.videoArg
+import ru.netology.nmedia.activity.CurrentPostFragment.Companion.idAr
+import ru.netology.nmedia.activity.NewPostFragment.Companion.idArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -58,8 +57,17 @@ class FeedFragment : Fragment() {
                 findNavController().navigate(
                     R.id.action_feedFragment_to_newPostFragment,
                     Bundle().apply {
-                        textArg = post.content
-                        videoArg = post.videoLink
+                        idArg = post.id.toString()
+                    })
+
+                viewModel.edit(post)
+            }
+
+            override fun openAvatar(post: Post) {
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_avatarFragment,
+                    Bundle().apply {
+                        idArg = post.id.toString()
                     })
 
                 viewModel.edit(post)
@@ -74,7 +82,7 @@ class FeedFragment : Fragment() {
                 findNavController().navigate(
                     R.id.action_feedFragment_to_currentPostFragment,
                     Bundle().apply {
-                        idArg = post.id.toString()
+                        idAr = post.id.toString()
                     }
                 )
             }
@@ -82,20 +90,6 @@ class FeedFragment : Fragment() {
         )
 
         binding.container.adapter = adapter
-//        viewModel.data.observe(viewLifecycleOwner) { posts ->
-//            val new = adapter.currentList.size < posts.size
-//            adapter.submitList(posts) {
-//                if (new) {
-//                    binding.container.smoothScrollToPosition(0)
-//                }
-//            }
-//            if (posts.isEmpty()) {
-//                binding.emptyStateView.visibility = View.VISIBLE
-//                binding.container.visibility = View.GONE
-//            } else {
-//                binding.emptyStateView.visibility = View.GONE
-//                binding.container.visibility = View.VISIBLE
-//            }
         viewModel.data.observe(viewLifecycleOwner) { state ->
             adapter.submitList(state.posts)
             binding.progress.isVisible = state.loading

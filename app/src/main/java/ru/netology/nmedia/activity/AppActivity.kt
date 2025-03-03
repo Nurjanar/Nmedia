@@ -13,8 +13,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
-import ru.netology.nmedia.activity.NewPostFragment.Companion.videoArg
+import ru.netology.nmedia.activity.NewPostFragment.Companion.idArg
 import ru.netology.nmedia.databinding.ActivityAppBinding
 
 class AppActivity : AppCompatActivity() {
@@ -25,7 +24,6 @@ class AppActivity : AppCompatActivity() {
 
         val binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         intent.let {
             if (it.action == Intent.ACTION_SEND) {
@@ -44,8 +42,7 @@ class AppActivity : AppCompatActivity() {
                 findNavController(R.id.fragment_container).navigate(
                     R.id.action_feedFragment_to_newPostFragment,
                     Bundle().apply {
-                        textArg = text
-                        videoArg = text
+                        idArg = text
                     }
                 )
             }
