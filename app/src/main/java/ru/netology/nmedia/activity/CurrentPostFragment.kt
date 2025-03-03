@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
-import ru.netology.nmedia.activity.NewPostFragment.Companion.videoArg
+import ru.netology.nmedia.activity.NewPostFragment.Companion.idArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostViewHolder
 import ru.netology.nmedia.databinding.FragmentCurrentPostBinding
@@ -27,11 +26,20 @@ class CurrentPostFragment : Fragment() {
     ): View? {
         val binding = FragmentCurrentPostBinding.inflate(layoutInflater, postPage, false)
         val viewModel: PostViewModel by activityViewModels()
-        val postId = arguments?.idArg?.toLong() ?: -1
+        val postId = arguments?.idAr?.toLong() ?: -1
         val holder = PostViewHolder(binding.postPage, object : OnInteractionListener {
 
             override fun onLike(post: Post) {
                 viewModel.likeById(post)
+            }
+
+            override fun openAvatar(post: Post) {
+                findNavController().navigate(
+                    R.id.action_currentPostFragment_to_avatarFragment,
+                    Bundle().apply {
+                        idArg = post.id.toString()
+                    })
+                viewModel.edit(post)
             }
 
             override fun onShare(post: Post) {
@@ -56,8 +64,7 @@ class CurrentPostFragment : Fragment() {
                 findNavController().navigate(
                     R.id.action_currentPostFragment_to_newPostFragment,
                     Bundle().apply {
-                        textArg = post.content
-                        videoArg = post.videoLink
+                        idArg = post.id.toString()
                     })
 
                 viewModel.edit(post)
@@ -85,6 +92,6 @@ class CurrentPostFragment : Fragment() {
     }
 
     companion object {
-        var Bundle.idArg by StringArg
+        var Bundle.idAr by StringArg
     }
 }

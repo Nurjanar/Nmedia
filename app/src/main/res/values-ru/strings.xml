@@ -25,4 +25,6 @@
     <string name="channel_remote_description">Уведомления с удалеленного сервера</string>
     <string name="retry_loading">Повторить</string>
     <string name="error_loading">Что-то пошло не так. Попробуйте позже</string>
+    <string name="link_to_avatar">Ссылка на фото аватара</string>
+    <string name="avatar_upload_button_description">Загрузить</string>
 </resources>

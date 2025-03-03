@@ -7,6 +7,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Count
@@ -19,6 +20,7 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onPlayVideo(post: Post) {}
     fun onPostClick(post: Post) {}
+    fun openAvatar(post: Post) {}
 }
 
 class PostsAdapter(private val onInteractionListener: OnInteractionListener) :
@@ -58,7 +60,21 @@ class PostViewHolder(
             playButton.visibility = View.GONE
         } else {
             video.visibility = View.VISIBLE
+            video.setImageResource(R.drawable.video)
             playButton.visibility = View.VISIBLE
+        }
+        val avatarName = post.authorAvatar?.trim().toString()
+        if (avatarName.isNotBlank()) {
+            val url = "http://10.0.2.2:9999/avatars/$avatarName"
+            Glide.with(binding.avatar)
+                .load(url)
+                .placeholder(R.drawable.ic_loading_100dp)
+                .error(R.drawable.ic_no_avatar_100dp)
+                .timeout(10_000)
+                .circleCrop()
+                .into(binding.avatar)
+        } else {
+            avatar.setImageResource(R.drawable.ic_no_avatar_100dp)
         }
         playButton.setOnClickListener {
             onInteractionListener.onPlayVideo(post)
@@ -74,7 +90,7 @@ class PostViewHolder(
             onInteractionListener.onShare(post)
         }
         avatar.setOnClickListener {
-            onInteractionListener.onPostClick(post)
+            onInteractionListener.openAvatar(post)
         }
         published.setOnClickListener {
             onInteractionListener.onPostClick(post)
@@ -111,6 +127,7 @@ class PostViewHolder(
     }
 }
 
+
 object PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(
         oldItem: Post, newItem: Post
@@ -120,3 +137,4 @@ object PostDiffCallback : DiffUtil.ItemCallback<Post>() {
         oldItem: Post, newItem: Post
     ) = oldItem == newItem
 }
+
