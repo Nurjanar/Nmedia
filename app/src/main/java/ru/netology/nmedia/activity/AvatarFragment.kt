@@ -8,23 +8,17 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentAvatarBinding
 import ru.netology.nmedia.util.StringArg
+import ru.netology.nmedia.view.loadCircleCrop
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class AvatarFragment : Fragment() {
     private fun loadAvatar(name: String, image: ImageView) {
         if (name.isNotBlank()) {
-            val url = "http://10.0.2.2:9999/avatars/$name"
-            Glide.with(image)
-                .load(url)
-                .placeholder(R.drawable.ic_loading_100dp)
-                .error(R.drawable.ic_error_100dp)
-                .timeout(10_000)
-                .circleCrop()
-                .into(image)
+            image.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${name}")
         } else {
             image.setImageResource(R.drawable.ic_no_avatar_100dp)
         }

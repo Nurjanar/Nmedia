@@ -1,6 +1,7 @@
 package ru.netology.nmedia.activity
 
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.StringArg
@@ -46,6 +48,15 @@ class NewPostFragment : Fragment() {
                 viewModel.save()
                 AndroidUtils.hideKeyBoard(requireView())
             }
+        }
+        viewModel.singleError.observe(viewLifecycleOwner) {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle(R.string.error_title)
+            builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
         binding.cancel.setOnClickListener {
             viewModel.cancel()

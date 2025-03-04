@@ -29,9 +29,13 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     val data: LiveData<FeedModel>
         get() = _data
     val edited = MutableLiveData(empty)
-    private val _postCreated = SingleLiveEvent<Unit>()
+    private val _postCreated = SingleLiveEvent<Unit>()//Событие о том, что пост добавлен
     val postCreated: LiveData<Unit>
         get() = _postCreated
+
+    private val _singleError = SingleLiveEvent<Unit>()//Событие о том, что произошла ошибка
+    val singleError: LiveData<Unit>
+        get() = _singleError
 
     init {
         loadPosts()
@@ -43,12 +47,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         // Данные успешно получены
         repository.getAll(
             object : PostRepository.Callback<List<Post>> {
-                override fun onSuccess(posts: List<Post>) {
-                    _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+                override fun onSuccess(data: List<Post>) {
+                    _data.postValue(FeedModel(posts = data, empty = data.isEmpty()))
                 }
 
                 // Получена ошибка
-                override fun onError(error: Throwable) {
+                override fun onError(e: Exception) {
                     _data.postValue(FeedModel(error = true))
                 }
             })
@@ -64,8 +68,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                         _postCreated.postValue(Unit)
                     }
 
-                    override fun onError(error: Throwable) {
-                        _data.postValue(FeedModel(error = true))
+                    override fun onError(e: Exception) {
+                        // _data.postValue(FeedModel(error = true))
+                        _singleError.postValue(Unit)
                     }
                 }
             )
@@ -107,8 +112,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 _data.postValue(_data.value?.copy(posts = updatedPosts.orEmpty()))
             }
 
-            override fun onError(error: Throwable) {
-                _data.postValue(FeedModel(error = true))
+            override fun onError(e: Exception) {
+                _singleError.postValue(Unit)
+                // _data.postValue(FeedModel(error = true))
             }
         }
         if (post.likedByMe) {
@@ -127,7 +133,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
         repository.removeById(id, object : PostRepository.Callback<Unit> {
             override fun onSuccess(data: Unit) {}
-            override fun onError(error: Throwable) {
+            override fun onError(e: Exception) {
+                _singleError.postValue(Unit)
                 _data.postValue(_data.value?.copy(posts = oldState))
             }
         }
@@ -152,8 +159,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 _data.postValue(_data.value?.copy(posts = updatedPosts.orEmpty()))
             }
 
-            override fun onError(error: Throwable) {
-                _data.postValue(FeedModel(error = true))
+            override fun onError(e: Exception) {
+                // _data.postValue(FeedModel(error = true))
+                _singleError.postValue(Unit)
             }
         }
         repository.shareById(post.id, callback)

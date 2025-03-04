@@ -26,4 +26,5 @@
     <string name="error_loading">Something went wrong. Try again later</string>
     <string name="link_to_avatar">Link to avatar photo</string>
     <string name="avatar_upload_button_description">Upload</string>
+    <string name="error_title">Post not saved! Please try again.</string>
 </resources>
