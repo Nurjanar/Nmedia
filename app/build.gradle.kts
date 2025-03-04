@@ -20,6 +20,8 @@ android {
     }
 
     buildFeatures.viewBinding = true
+    buildFeatures.buildConfig=true
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -28,9 +30,14 @@ android {
                 "proguard-rules.pro"
             )
             manifestPlaceholders["usesCleartextTraffic"] = false
+            buildConfigField ("String", "BASE_URL", "\"https://netomedia.ru\"")
+
+
         }
+
         debug {
             manifestPlaceholders["usesCleartextTraffic"] = true
+            buildConfigField ("String", "BASE_URL", "\"http://10.0.2.2:9999\"")
         }
     }
     compileOptions {
@@ -38,14 +45,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "18"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
 
     implementation("androidx.core:core-ktx:1.15.0")
-    implementation("com.google.code.gson:gson:2.11.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
@@ -54,6 +60,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation("com.google.android.datatransport:transport-api:3.0.0")
     kapt("androidx.lifecycle:lifecycle-compiler:2.8.7")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.3.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.8.8")
@@ -66,6 +73,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-base:18.5.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     kapt("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     // define a BOM and its version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))

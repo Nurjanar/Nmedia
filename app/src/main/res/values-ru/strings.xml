@@ -27,4 +27,5 @@
     <string name="error_loading">Что-то пошло не так. Попробуйте позже</string>
     <string name="link_to_avatar">Ссылка на фото аватара</string>
     <string name="avatar_upload_button_description">Загрузить</string>
+    <string name="error_title">Пост не сохранён! Пожалуйста, попробуйте ещё</string>
 </resources>
