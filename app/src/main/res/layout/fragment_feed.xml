@@ -12,6 +12,8 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="-186dp"
         tools:listitem="@layout/card_post" />
 
     <TextView

@@ -22,15 +22,27 @@ class NewPostFragment : Fragment() {
         val binding = FragmentNewPostBinding.inflate(layoutInflater, container, false)
         val viewModel: PostViewModel by activityViewModels()
 
-        arguments?.textArg?.let { binding.edit.setText(it) }
-        arguments?.videoArg?.let(binding.videoUrl::setText)
+        val postId = arguments?.idArg?.toLong()
+
+        viewModel.data.observe(viewLifecycleOwner) { state ->
+            if (state.posts.isNotEmpty()) {
+                val post = state.posts.find { it.id == postId }
+                if (post != null) {
+                    binding.edit.setText(post.content)
+                    binding.videoUrl.setText(post.videoLink)
+                } else {
+                    return@observe
+                }
+            }
+        }
         binding.edit.requestFocus()
 
         binding.ok.setOnClickListener {
             val text = binding.edit.text.toString()
-            val videoUrl = binding.videoUrl.text.toString()
+            val videoUrl = binding.videoUrl.text?.trim().toString()
+
             if (text.isNotBlank()) {
-                viewModel.changeContent(text, videoUrl)
+                viewModel.changeContent(text, videoUrl, null)
                 viewModel.save()
                 AndroidUtils.hideKeyBoard(requireView())
             }
@@ -48,10 +60,8 @@ class NewPostFragment : Fragment() {
         return binding.root
     }
 
-
     companion object {
-        var Bundle.textArg by StringArg
-        var Bundle.videoArg by StringArg
+        var Bundle.idArg by StringArg
     }
 
 }
