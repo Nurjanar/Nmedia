@@ -7,11 +7,12 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Count
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.view.loadCircleCrop
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
@@ -55,6 +56,11 @@ class PostViewHolder(
         viewed.text = count.numberCheck(post.viewed)
         like.isChecked = post.likedByMe
         like.text = count.numberCheck(post.likes)
+        if (!post.authorAvatar.isNullOrBlank()) {
+            avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
+        } else {
+            avatar.setImageResource(R.drawable.ic_no_avatar_100dp)
+        }
         if (post.videoLink.isNullOrEmpty()) {
             video.visibility = View.GONE
             playButton.visibility = View.GONE
@@ -62,19 +68,6 @@ class PostViewHolder(
             video.visibility = View.VISIBLE
             video.setImageResource(R.drawable.video)
             playButton.visibility = View.VISIBLE
-        }
-        val avatarName = post.authorAvatar?.trim().toString()
-        if (avatarName.isNotBlank()) {
-            val url = "http://10.0.2.2:9999/avatars/$avatarName"
-            Glide.with(binding.avatar)
-                .load(url)
-                .placeholder(R.drawable.ic_loading_100dp)
-                .error(R.drawable.ic_no_avatar_100dp)
-                .timeout(10_000)
-                .circleCrop()
-                .into(binding.avatar)
-        } else {
-            avatar.setImageResource(R.drawable.ic_no_avatar_100dp)
         }
         playButton.setOnClickListener {
             onInteractionListener.onPlayVideo(post)
@@ -122,8 +115,6 @@ class PostViewHolder(
                 }
             }.show()
         }
-
-
     }
 }
 
