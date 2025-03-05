@@ -38,11 +38,30 @@ class FCMService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
+        val actionValue = message.data[action]
+        if (actionValue != null) {
+            try {
+                when (Action.valueOf(actionValue)) {
+                    Action.LIKE -> handleLike(
+                        gson.fromJson(
+                            message.data[content],
+                            Like::class.java
+                        )
+                    )
 
-        message.data[action]?.let {
-            when (Action.valueOf(it)) {
-                Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
+                    Action.NEW_POST -> handleNewPost(
+                        gson.fromJson(
+                            message.data[content],
+                            NewPost::class.java
+                        )
+                    )
+                }
+            } catch (e: IllegalArgumentException) {
+                Log.w("FCM", "Получено неподдерживаемое действие")
+                notifyUnsupportedAction(actionValue)
             }
+        } else {
+            Log.w("FCM", "Получено неподдерживаемое действие")
         }
     }
 
@@ -66,6 +85,22 @@ class FCMService : FirebaseMessagingService() {
         notify(notification)
     }
 
+    private fun handleNewPost(content: NewPost) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_user_posted,
+                    content.userName,
+                )
+            )
+            .setContentText(content.text)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        notify(notification)
+    }
+
     private fun notify(notification: Notification) {
         if (
             Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
@@ -77,10 +112,34 @@ class FCMService : FirebaseMessagingService() {
                 .notify(Random.nextInt(100_000), notification)
         }
     }
+
+    private fun notifyUnsupportedAction(actionValue: String) {
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channelId = "unsupported_action_channel"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Unsupported Actions",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle("Неподдерживаемое действие")
+            .setContentText("Получено неподдерживаемое действие: $actionValue")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
+    }
 }
 
 enum class Action {
     LIKE,
+    NEW_POST,
 }
 
 data class Like(
@@ -89,3 +148,11 @@ data class Like(
     val postId: Long,
     val postAuthor: String,
 )
+
+data class NewPost(
+    val userId: Long,
+    val userName: String,
+    val postId: Long,
+    val text: String,
+)
+
