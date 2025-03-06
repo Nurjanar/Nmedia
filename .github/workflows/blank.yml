@@ -22,8 +22,8 @@ jobs:
 
       - name: Decode google-services.json
         env:
-        FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-        run: echo $FIREBASE_SECRET > ./app/google-services.json
+          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+        run: echo "${FIREBASE_SECRET}" > ./app/google-services.json
 
       - name: Build
         run: |
