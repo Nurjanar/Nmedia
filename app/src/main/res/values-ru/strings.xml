@@ -28,4 +28,5 @@
     <string name="link_to_avatar">Ссылка на фото аватара</string>
     <string name="avatar_upload_button_description">Загрузить</string>
     <string name="error_title">Пост не сохранён! Пожалуйста, попробуйте ещё</string>
+    <string name="notification_user_posted">Пользователь %1$s опубликовал(а) новый пост:</string>
 </resources>
